@@ -1,8 +1,10 @@
 import json
+
 from bs4 import BeautifulSoup
-from logger.log import parser
+
+from logger import parser
 from db.models import WeiboComment
-from decorators.decorator import parse_decorator
+from decorators import parse_decorator
 
 
 @parse_decorator('')
@@ -18,9 +20,13 @@ def get_html_cont(html):
 def get_total_page(html):
     try:
         page_count = json.loads(html, encoding='utf-8').get('data', '').get('page', '').get('totalpage', 1)
-    except Exception as e:
-        parser.error('获取总也面出错，具体错误是{}'.format(e))
-        page_count = 1
+    except Exception:
+        try:
+            json.loads(html, encoding='utf-8').get('data', '').get('tag', '')
+            page_count = 1
+        except Exception as e:
+            parser.error('Get total page error, the reason is {}'.format(e))
+            page_count = 1
 
     return page_count
 

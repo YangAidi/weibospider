@@ -9,6 +9,7 @@ max_search_page: 50            # max search page for crawling
 max_home_page: 50              # max user home page for crawling
 max_comment_page: 2000         # max comment page for crawling
 max_repost_page: 2000          # max repost page for crawling
+max_dialogue_page: 2000        # max dialogue page for crawling
 max_retries: 5                 # retry times for crawling
 
 # You should set the args below if you login from uncommon place
@@ -35,7 +36,17 @@ share_host_count: 5
 # the expire time(hours) of each weibo cookies
 cookie_expire_time: 23
 
+# 1 for allow download images, otherwise set it to 0
+images_allow: 1
 
+# the default image path is '${user.home}/weibospider/images'
+# if you want to change another directory for download image, just set the path below
+images_path: ''
+
+# the value can be large or thumbnail
+# in large type, you will download the large image
+# in thumbnail type, you will download the thumbnail image
+image_type: large
 
 db:
     host: 127.0.0.1
@@ -48,7 +59,7 @@ db:
 redis:
     host: 127.0.0.1
     port: 6379
-    password: weibospider
+    password: ''
     cookies: 1                   # store and fetch cookies
     # store fetched urls and results,so you can decide whether retry to crawl the urls or not
     urls: 2
@@ -67,7 +78,7 @@ redis:
     #                             #
     ###############################
     sentinel: ''
-    master: mymaster             # redis sentinel master name, if you don't need it, just set master: ''
+    master: ''             # redis sentinel master name, if you don't need it, just set master: ''
     socket_timeout: 5            # sockt timeout for redis sentinel, if you don't need it, just set master: ''
 
 
@@ -76,9 +87,9 @@ email:
     # your email must open smtp & pop3 service
     server: smtp.sina.com
     port: 587
-    from: xxxx@sina.com   #sendingemailaccount
-    password: xxxxx          #youremailpasswd
-    to: xxxx@139.com      #bind 139 email,so your phone will receive the warning message
+    from: xxxxx@sina.com         #sendingemailaccount
+    password: xxxx               #youremailpasswd
+    to: xxxxxxxx@139.com         #bind 139 email,so your phone will receive the warning message
     subject: Warning Of Weibo Spider
     warning_info: Please find out the reason why the spider stops working
 

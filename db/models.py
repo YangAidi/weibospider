@@ -1,6 +1,5 @@
-# -*-coding:utf-8 -*-
-from db.basic_db import Base
-from db.tables import *
+from .basic import Base
+from .tables import *
 
 
 class LoginInfo(Base):
@@ -9,6 +8,9 @@ class LoginInfo(Base):
 
 class User(Base):
     __table__ = wbuser
+
+    def __init__(self, uid):
+        self.uid = uid
 
 
 class SeedIds(Base):
@@ -21,6 +23,9 @@ class KeyWords(Base):
 
 class WeiboData(Base):
     __table__ = weibo_data
+
+    def __repr__(self):
+        return 'weibo url:{};weibo content:{}'.format(self.weibo_url, self.weibo_cont)
 
 
 class KeywordsWbdata(Base):
@@ -53,4 +58,8 @@ class UserRelation(Base):
         self.type = type
 
 
+class WeiboDialogue(Base):
+    __table__ = weibo_dialogue
 
+    def __repr__(self):
+        return 'weibo_id:{},dialogue_id:{},dialogue_cont:{}'.format(self.weibo_id, self.dialogue_id, self.dialogue_cont)
